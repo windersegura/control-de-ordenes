@@ -1,0 +1,42 @@
+<div>
+    <div>
+        <h2 *ngIf="!is_new">Editar Producto</h2>
+        <h2 *ngIf="is_new">Crear Producto</h2>
+    </div>
+
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="center center" fxLayoutGap.gt-sm="16px">
+        <form [formGroup]="form">
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="center center" fxLayoutGap.gt-sm="16px">
+                <mat-form-field fxFlex="50%">
+                    <mat-label>Nombre Producto</mat-label>
+                    <input matInput formControlName="nombre" id="nombre" name="nombre" type="text">
+               </mat-form-field>
+            </div>
+           
+           <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="center center" fxLayoutGap.gt-sm="16px">
+            <mat-form-field>
+                <mat-label>Precio</mat-label>
+                <input matInput formControlName="precio" id="precio" name="nombre" type="number">
+            </mat-form-field>
+           </div>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="center center" fxLayoutGap.gt-sm="16px">
+                <mat-form-field>
+                    <mat-label>Marcas</mat-label>
+                    <mat-select formControlName="marca">
+                      <mat-option  *ngFor="let marca of marcas" [value]="marca.id">
+                        {{marca.marca}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="center center" fxLayoutGap.gt-sm="16px">
+                <button mat-raised-button color="primary" (click)="save()">Guardar</button>
+            </div>
+        </form>
+
+
+    </div>
+    
+
+</div>

@@ -1,0 +1,38 @@
+<div>
+    <form [formGroup]="form">
+
+        <p class="h4 mb-4">Ingresar</p>
+      
+        <!-- Email -->
+      <div>
+        <mat-form-field>
+            <mat-label>Usuario:</mat-label>
+            <input type="text" formControlName="username" id="defaultLoginFormEmail" matInput placeholder="Usuario">
+        </mat-form-field>
+      </div>
+        
+      
+        <!-- Password -->
+        <div>
+            <mat-form-field>
+                <mat-label>Password:</mat-label>
+                <input type="password" formControlName="password" id="defaultLoginFormPassword" matInput placeholder="Password">
+            </mat-form-field>
+        </div>
+      
+        
+      
+        <!-- Sign in button -->
+        <button  mat-raised-button color="primary"
+            (click)="send()">Ingresar</button>
+      
+        <!-- Register -->
+        <p> No esta registrado: 
+          <a href="">Registrar</a>
+        </p>
+      
+      
+    
+      
+      </form>
+</div>

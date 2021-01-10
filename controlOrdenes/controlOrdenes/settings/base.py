@@ -1,7 +1,7 @@
 """
 Base Configurations
 """
-
+import datetime
 import os
 
 from unipath import Path
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     #local apps
     'applications.control',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 ]
 
@@ -50,16 +51,27 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.BasicAuthentication',
+
     ),
 }
 
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:3000',
+    'http://localhost:4200',
 )
 
+
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'controlOrdenes.utils.my_jwt_response_handler',
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=60 * 60 * 24 * 7),
+
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
 
 
 ROOT_URLCONF = 'controlOrdenes.urls'
@@ -102,6 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "control.User" 
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

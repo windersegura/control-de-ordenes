@@ -1,6 +1,39 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 
 # Create your models here.
+
+class User(AbstractUser):
+    """Modelo Vendedor."""
+
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = ('first_name', 'last_name', 'email', "name")
+    USERNAME_FIELD = 'username'
+
+    # TODO: Define fields here
+    name = models.CharField(verbose_name='Nombre Vendedor', max_length=100)
+    apellido = models.CharField(verbose_name='Apellido Vendedor', max_length=100)
+    email = models.EmailField("Email", null=True, blank=True)
+    direccion = models.CharField(verbose_name='Direccion Vendedor', max_length=250)
+    telefono = models.CharField(verbose_name='Telefono Vendedor', max_length=50)
+    
+    
+
+    def __str__(self):
+        return '%s - %s - %s' % (self.name, self.apellido, self.direccion)
+
+    def get_absolute_url(self):
+        return reverse("users:detail", kwargs={"id": self.id})
+
+    class Meta:
+        """Meta definition for Vendedor."""
+
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+
+
+
 class Marca(models.Model):
     """Modelo Marca."""
 
@@ -35,28 +68,7 @@ class Producto(models.Model):
     def __str__(self):
         return '%s - %s' % (self.nombre, self.precio)
 
-
-class Vendedor(models.Model):
-    """Modelo Vendedor."""
-
-    # TODO: Define fields here
-    nombre = models.CharField(verbose_name='Nombre Vendedor', max_length=100)
-    apellido = models.CharField(verbose_name='Apellido Vendedor', max_length=100)
-    direccion = models.CharField(verbose_name='Direccion Vendedor', max_length=250)
-    telefono = models.CharField(verbose_name='Telefono Vendedor', max_length=50)
-    catalogo = models.ForeignKey(Catalogo, on_delete=models.CASCADE)
-
-
-    class Meta:
-        """Meta definition for Vendedor."""
-
-        verbose_name = 'Vendedor'
-        verbose_name_plural = 'Vendedors'
-
-    def __str__(self):
-        return '%s - %s - %s' % (self.nombre, self.apellido, self.direccion)
-
-
+        
 
 class Catalogo(models.Model):
     """Modelo Catalogo."""
@@ -64,6 +76,7 @@ class Catalogo(models.Model):
     # TODO: Define fields here
     nombre = models.CharField(verbose_name='Nombre Catalogo', max_length=100)
     tipo = models.CharField(verbose_name='Tipo Catalogo', max_length=50)
+    vendedor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     class Meta:
         """Meta definition for Catalogo."""
@@ -73,6 +86,10 @@ class Catalogo(models.Model):
 
     def __str__(self):
         return '%s - %s' % (self.nombre, self.tipo)
+
+
+
+
 
 
 class CatalogoProducto(models.Model):
@@ -107,7 +124,7 @@ class CompraEncabezado(models.Model):
     cliente = models.CharField(verbose_name='Cliente Nombre', max_length=100, null=True)
     direccion = models.CharField(verbose_name='Direccion Comprador', max_length=100)
     nit = models.CharField(verbose_name='Nit', max_length=50)
-    vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE, null=True)
+    vendedor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     class Meta:
         """Meta definition for CompraEncabezado."""
