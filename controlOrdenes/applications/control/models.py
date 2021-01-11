@@ -8,7 +8,7 @@ class User(AbstractUser):
     """Modelo Vendedor."""
 
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ('first_name', 'last_name', 'email', "name")
+    REQUIRED_FIELDS = ('email', "name", "apellido")
     USERNAME_FIELD = 'username'
 
     # TODO: Define fields here

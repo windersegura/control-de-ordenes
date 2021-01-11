@@ -35,7 +35,8 @@ export class ProductosEditComponent implements OnInit {
       nombre: [null, [Validators.required]],
       precio: [null,[Validators.required]],
       marca: [null,[Validators.required]],
-      catalogo: [null, []]
+      catalogo: [null, []],
+      catalogo_o:[null,[]]
     })
     
     

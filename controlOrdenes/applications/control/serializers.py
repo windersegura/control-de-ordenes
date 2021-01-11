@@ -42,14 +42,6 @@ class MarcaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Marca
         fields = '__all__'
-    
-
-class ProductoSerializer(serializers.ModelSerializer):
-    marca_o = MarcaSerializer(source='marca', read_only=True)
-    class Meta:
-        model = Producto
-        fields = ('id', 'nombre', 'precio', 'marca', 'marca_o')
-
 
 
 class CatalogoSerializer(serializers.ModelSerializer):
@@ -57,6 +49,18 @@ class CatalogoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Catalogo
         fields = ('id','nombre', 'tipo', 'vendedor', 'vendedor_o')
+    
+
+class ProductoSerializer(serializers.ModelSerializer):
+    marca_o = MarcaSerializer(source='marca', read_only=True)
+    catalogo_o = CatalogoSerializer(source='catalogo', many=True, read_only=True)
+    class Meta:
+        model = Producto
+        fields = ('id', 'nombre', 'precio', 'marca', 'marca_o', 'catalogo_o')
+
+
+
+
 
     
 
