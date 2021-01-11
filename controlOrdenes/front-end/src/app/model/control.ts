@@ -52,3 +52,27 @@ export class Producto implements iProducto{
     }
 
 }
+
+
+export interface iCatalogo {
+    id:string;
+    nombre:string;
+    tipo:string;
+    vendedor:any;
+  }
+
+export class Catalogo implements iCatalogo{
+    id:string;
+    nombre:string;
+    tipo:string;
+    vendedor:any;
+
+    constructor(catalogo:Catalogo){
+        if (catalogo){
+            this.id = catalogo.id;
+            this.nombre = catalogo.nombre;
+            this.tipo = catalogo.tipo;
+            this.vendedor = catalogo.vendedor;
+        }
+    }
+}

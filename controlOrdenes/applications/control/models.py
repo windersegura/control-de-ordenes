@@ -50,23 +50,6 @@ class Marca(models.Model):
         return '%s' % (self.marca)
 
 
-class Producto(models.Model):
-    """Modelo Producto."""
-
-    # TODO: Define fields here
-    nombre = models.CharField(verbose_name='Nombre Producto', max_length=100)
-    precio = models.DecimalField(verbose_name='Precio Producto', max_digits=25, decimal_places=2)
-    marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
-
-
-    class Meta:
-        """Meta definition for Producto."""
-
-        verbose_name = 'Producto'
-        verbose_name_plural = 'Productos'
-
-    def __str__(self):
-        return '%s - %s' % (self.nombre, self.precio)
 
         
 
@@ -87,33 +70,26 @@ class Catalogo(models.Model):
     def __str__(self):
         return '%s - %s' % (self.nombre, self.tipo)
 
+    
 
-
-
-
-
-class CatalogoProducto(models.Model):
-    """Modelo CatalogoProducto."""
+class Producto(models.Model):
+    """Modelo Producto."""
 
     # TODO: Define fields here
+    nombre = models.CharField(verbose_name='Nombre Producto', max_length=100)
+    precio = models.DecimalField(verbose_name='Precio Producto', max_digits=25, decimal_places=2)
+    marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
+    catalogo = models.ManyToManyField(Catalogo, blank=True)
 
 
     class Meta:
-        """Meta definition for CatalogoProducto."""
+        """Meta definition for Producto."""
 
-        verbose_name = 'CatalogoProducto'
-        verbose_name_plural = 'CatalogoProductos'
-        order_with_respect_to = 'catalogo'
-        unique_together = [
-            ('catalogo', 'producto')
-        ]
+        verbose_name = 'Producto'
+        verbose_name_plural = 'Productos'
 
-    catalogo = models.ForeignKey(Catalogo, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    
-
-    
-
+    def __str__(self):
+        return '%s - %s' % (self.nombre, self.precio)
 
 
 

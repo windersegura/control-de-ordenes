@@ -1,3 +1,11 @@
 <div>
-    
+    <div *ngIf="modo == 1">
+        <app-catalogo (selectCatalogo)="selectCatalogo($event)"></app-catalogo>
+    </div>
+    <div *ngIf="modo == 2">
+        <app-productos-list (selecProducto)="selectProducto($event)" [catalogo]="catalogo"></app-productos-list>
+    </div>
+    <div *ngIf="modo == 3">
+        <app-productos-edit [productoEdit]="producto" [is_new]=false></app-productos-edit>
+    </div>
 </div>

@@ -74,9 +74,34 @@ export class ControlServiceService {
     const options = {
       nombre: params.nombre,
       precio: params.precio,
-      marca:params.marca
+      marca:params.marca,
+      catalogo: params.catalogo,
     }
     return this.http.post<Producto>(url,options)
+  }
+
+  updateProducto(producto: Producto): Observable<Producto>{
+    const url = `http://localhost:8000/control/update-producto/${producto.id}`
+  
+    return this.http.put<Producto>(url,producto)
+  }
+
+
+  deleteProducto(producto:Producto): Observable<Producto>{
+    const url= `http://localhost:8000/control/delete-producto/${producto.id}`
+    return this.http.delete<Producto>(url);
+  }
+
+
+
+
+  //Catalogo
+  listCatalogo(params?: any):Observable<Array<any>>{
+    const url = `http://localhost:8000/control/catalogo/`
+    const options = {
+      params:params,
+    }
+    return this.http.get<Array<any>>(url, options)
   }
 
 }

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
-from .models import User,Producto,Marca
+from .models import User,Producto,Marca,Catalogo
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -52,6 +52,13 @@ class ProductoSerializer(serializers.ModelSerializer):
 
 
 
+class CatalogoSerializer(serializers.ModelSerializer):
+    vendedor_o = UserSerializer(source='vendedor', read_only=True)
+    class Meta:
+        model = Catalogo
+        fields = ('id','nombre', 'tipo', 'vendedor', 'vendedor_o')
+
+    
 
         
     

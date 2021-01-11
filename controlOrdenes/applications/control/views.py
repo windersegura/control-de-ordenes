@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.db.models import FieldDoesNotExist
 from .models import *
 from rest_framework import permissions, status, mixins,generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer, UserSerializerWithToken, ProductoSerializer, \
-    MarcaSerializer
+    MarcaSerializer, CatalogoSerializer
 
 # Create your views here.
 
@@ -42,6 +43,15 @@ class ProductoListAPIView(generics.ListAPIView):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
 
+    def get_queryset(self):
+        queryset = self.queryset
+        try:
+            catalogo = self.request.query_params.get('catalogo', None)
+            queryset = Producto.objects.filter(catalogo__id = catalogo)
+        except FieldDoesNotExist:
+            queryset = Producto.objects.none()
+        return queryset
+
 
 class ProductoUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Producto.objects.all()
@@ -57,6 +67,16 @@ class MarcaListAPIView(generics.ListAPIView):
     queryset = Marca.objects.all()
     serializer_class = MarcaSerializer
 
+
+
+
+class CatalogoListAPIView(generics.ListAPIView):
+    queryset = Catalogo.objects.all()
+    serializer_class = CatalogoSerializer
+
+
+
+    
 
 
 
